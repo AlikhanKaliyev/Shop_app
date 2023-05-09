@@ -36,7 +36,7 @@ public class Product {
     @Column(name = "product_image")
     private String productImage;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "publisher_id",referencedColumnName = "user_id")
     private User user;
 
