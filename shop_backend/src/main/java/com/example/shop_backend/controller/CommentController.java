@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,9 +27,9 @@ import java.util.Optional;
 public class CommentController {
     private final CommentService commentService;
     @PostMapping()
-    public ResponseEntity postComment(@RequestBody CommentCreateDTO commentCreateDTO) {
+    public ResponseEntity postComment(@RequestBody CommentCreateDTO commentCreateDTO, Authentication authentication) {
         try {
-            Comment comment = commentService.postComment(commentCreateDTO);
+            Comment comment = commentService.postComment(commentCreateDTO, authentication);
             return new ResponseEntity(comment,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(new ErrorResponse("Some properties are missing"), HttpStatus.BAD_REQUEST);

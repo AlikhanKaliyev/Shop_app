@@ -8,6 +8,7 @@ import com.example.shop_backend.repository.CommentRepository;
 import com.example.shop_backend.repository.ProductRepository;
 import com.example.shop_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,9 +22,10 @@ public class CommentService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    public Comment postComment(CommentCreateDTO commentCreateDTO) {
+    public Comment postComment(CommentCreateDTO commentCreateDTO, Authentication authentication) {
+        Long _userId = ((User) authentication.getPrincipal()).getId();
         Optional<Product> product = productRepository.findById(commentCreateDTO.getProductId());
-        Optional<User> user = userRepository.findById(commentCreateDTO.getAuthorId());
+        Optional<User> user = userRepository.findById(_userId);
         Comment _comment = new Comment(
                 commentCreateDTO.getId(),
                 commentCreateDTO.getText(),

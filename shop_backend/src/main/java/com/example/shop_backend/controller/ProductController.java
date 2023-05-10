@@ -7,6 +7,7 @@ import com.example.shop_backend.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +19,10 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     @PostMapping()
-    public ResponseEntity createProduct(@RequestBody ProductCreateDTO productCreateDTO) {
+    public ResponseEntity createProduct(@RequestBody ProductCreateDTO productCreateDTO, Authentication authentication) {
         try {
-            Product product = productService.createProduct(productCreateDTO);
+
+            Product product = productService.createProduct(productCreateDTO,authentication);
             return new ResponseEntity(product,HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity(new ErrorResponse("Some properties are missing"), HttpStatus.BAD_REQUEST);

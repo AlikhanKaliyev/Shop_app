@@ -10,5 +10,4 @@ public class CommentCreateDTO {
     private String text;
     private int rating;
     private long productId;
-    private long authorId;
 }

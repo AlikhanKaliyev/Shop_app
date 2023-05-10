@@ -13,6 +13,5 @@ public class ProductCreateDTO {
     private String productName;
     private String productDescription;
     private String productImage;
-    private long publisherId;
 
 }
